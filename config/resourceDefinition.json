@@ -2,7 +2,7 @@
     {
       "name": "virtual_private_cloud",
       "length": {
-        "min": 3,
+        "min": 1,
         "max": 63
       },
       "regex": "^(?=.{3,63}$)[a-z][a-z0-9]+$",
