@@ -1,0 +1,66 @@
+{
+  "us-east-1": {
+    "abbr": "usea1",
+    "code": "01"
+  },
+  "us-east-2": {
+    "abbr": "usea2",
+    "code": "02"
+  },
+  "us-west-1": {
+    "abbr": "uswe1",
+    "code": "03"
+  },
+  "us-west-2": {
+    "abbr": "uswe2",
+    "code": "04"
+  },
+  "us-gov-west-1": {
+    "abbr": "ugwe2",
+    "code": "05"
+  },
+  "ca-central-1": {
+    "abbr": "cace1",
+    "code": "06"
+  },
+  "eu-west-1": {
+    "abbr": "euwe1",
+    "code": "07"
+  },
+  "eu-west-2": {
+    "abbr": "euwe2",
+    "code": "08"
+  },
+  "eu-central-1": {
+    "abbr": "euce1",
+    "code": "09"
+  },
+  "ap-southeast-1": {
+    "abbr": "apse1",
+    "code": "10"
+  },
+  "ap-southeast-2": {
+    "abbr": "apse2",
+    "code": "11"
+  },
+  "ap-south-1": {
+    "abbr": "apso1",
+    "code": "12"
+  },
+  "ap-northeast-1": {
+    "abbr": "apne1",
+    "code": "13"
+  },
+  "ap-northeast-2": {
+    "abbr": "apne2",
+    "code": "14"
+  },
+  "sa-east-1": {
+    "abbr": "saea1",
+    "code": "15"
+  },
+  "cn-north-1": {
+    "abbr": "cnno1",
+    "code": "16"
+  }
+}

@@ -1,0 +1,205 @@
+<a name="h1-naming"></a> [Naming](#h1-naming) | [Tagging](#h1-tagging)
+# Azure Naming Convention
+
+## Resource Naming Format
+
+1. General Format
+ 
+  ``` txt
+  Format: [resource_type]-[app_name][purpose]-[cloud_provider]-[region_code]-[env]-[running_number]
+          [resource_type][app_name][purpose][cloud_provider][region_code][env][running_number]
+  
+  Field Descriptions:
+    Resource Type       ==> "Azure Recommended Abbreviations"
+    Application Name    ==> free text without hyphens and doesn't violate "Azure naming restriction"
+    Purpose (optional)  ==> free text without hyphens and doesn't violate "Azure naming restriction"
+    Cloud Provider      ==> az (Azure) | aw (AWS) | gc (GCP)
+    Region Code         ==> asse (southeastasia) | asea (eastasia)
+    Environment         ==> dev | sit | uat | stg | prd | sbx
+    Running Number      ==> 001 | 002 | 003 | ...
+
+  Example:
+    resource group     ==> rg-abcd-az-asse-prd-001
+    virtual network    ==> vnet-abcd-az-asse-prd-001
+    subnet             ==> snet-abcd-az-asse-prd-001
+    key vault          ==> kvabcdazasseprd001
+    api management     ==> apimabcdazasseprd001
+    container registry ==> acrabcdazasseprd001
+  ```
+
+  References:
+  - [Azure naming restriction](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules)
+  - [Azure Recommended Abbreviations](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations)
+  - [Azure Regions to 4-letter abbreviations and numberic codes](#appendix1)
+ 
+2. Window VM format (Due to hostname of Window VM is limited to 15 characters)
+
+  ``` txt
+  Format: [env][app_name][cloud_provider_code][region_code][resource_type][running_number]
+  
+  Field Descriptions:
+      Resource Type       ==> vm | vmss
+      Application Name    ==> 7 charaters (vm) | 5 charaters (vmss)
+      Purpose (optional)  ==> share character space with "Application Name"
+      Cloud Provider Code ==> 1 (az) | 2 (aws) | 3 (gcp) | 4 (huawei) | etc
+      Region Code         ==> 01 (southeastasia) | 02 (eastasia) | etc
+      Environment         ==> d (dev) | i (sit) | u (uat) | s (stg) | p (prd) | b (sandbox)
+      Running Number      ==> 01 | 02 | 03 | ...
+
+  Example:
+      vmabcdsdb101p01
+      vmabcdsdb101p02
+      vmabcdssa101p01
+      vmabcdssa101p02
+  ```
+
+  References:
+  - [Azure Regions to 4-letter abbreviations and numberic codes](#appendix1)
+
+## Example
+
+### Management Group
+ 
+- **Restrictions**:
+  - length: 1-64
+  - regex: `^[a-zA-Z0-9][a-zA-Z0-9\-\._]+[a-zA-Z0-9]$`
+- **Example**:
+  - mg-abcdef
+  - mg-abcdef-dev
+  - mg-abcdef-prd
+
+### Subscription
+
+- **Restrictions**:
+  - length: 1-64
+  - regex: `^[a-zA-Z0-9][a-zA-Z0-9-._]+[a-zA-Z0-9_]$`
+- **Example**:
+  - sub-Affiliate-az-prd
+  - sub-AIChatbotExternal-az-dev
+  - sub-AICallCenter-az-sbx
+
+### Private DNS Virtual Network Link
+
+- **Restrictions**:
+  - length: 1-80
+  - regex: `^[a-zA-Z0-9][a-zA-Z0-9-._]+[a-zA-Z0-9_]$`
+- **Example**:
+    - link-vnet-abcdef-az-asse-prd-001
+    - link-vnet-abcdef-az-asse-prd-002
+
+### Virtual Network Peering
+
+- **Restrictions**:
+  - length: 1-80
+  - regex: `^[a-zA-Z0-9][a-zA-Z0-9-._]+[a-zA-Z0-9_]$`
+- **Example**:
+  - vpeer-vnet-source-az-asse-prd-001-vnet-remote-az-asse-prd-001
+  - vpeer-vnet-source-az-asse-prd-002-vnet-remote-az-asse-prd-002
+
+%{ for txt in inputs ~}
+### ${txt.name}
+ 
+- **Restrictions**:
+  - length: ${txt.length_min}-${txt.length_max}
+  - regex: `${txt.regex}`
+- **Example**:
+  %{ for ex in txt.example ~}
+  - ${ex}
+  %{ endfor ~}
+
+%{ endfor ~}
+## Appendix
+
+### <a name="appendix1"></a>Azure Regions to 4-letter abbreviations and numberic codes
+
+> Inspired by [Cobalt Project of Microsoft](https://github.com/microsoft/cobalt/wiki/Azure-Services-Naming-Convention#location-abbreviations)
+
+| Location           | Abbr | Code   |
+| ------------------ | ---- | ------ |
+| southeastasia      | asse | 01     |
+| eastasia           | asea | 02     |
+| centralus          | usce | 03     |
+| eastus             | usea | 04     |
+| eastus2            | use2 | 05     |
+| westus             | uswe | 06     |
+| westus2            | usw2 | 07     |
+| northcentralus     | usnc | 08     |
+| southcentralus     | ussc | 09     |
+| westcentralus      | uswc | 10     |
+| northeurope        | euno | 11     |
+| westeurope         | euwe | 12     |
+| japanwest          | jawe | 13     |
+| japaneast          | jaea | 14     |
+| brazilsouth        | brso | 15     |
+| australiaeast      | auea | 16     |
+| australiasoutheast | ause | 17     |
+| southindia         | inso | 18     |
+| centralindia       | ince | 19     |
+| westindia          | inwe | 20     |
+| canadacentral      | cace | 21     |
+| canadaeast         | caea | 22     |
+| uksouth            | ukso | 23     |
+| ukwest             | ukwe | 24     |
+| koreacentral       | koce | 25     |
+| koreasouth         | koso | 26     |
+| francecentral      | frce | 27     |
+| francesouth        | frso | 28     |
+| australiacentral   | auce | 29     |
+| australiacentral2  | auc2 | 30     |
+| southafricanorth   | sano | 31     |
+| southafricawest    | sawe | 32     |
+| brazilsoutheast    | brse | 33     |
+| germanynorth       | deno | 34     |
+| germanywestcentral | dewc | 35     |
+| norwayeast         | noea | 36     |
+| norwaywest         | nowe | 37     |
+| qatarcentral       | qace | 38     |
+| swedencentral      | sece | 39     |
+| switzerlandnorth   | ceno | 40     |
+| switzerlandwest    | cewe | 41     |
+| uaecentral         | aece | 42     |
+| uaenorth           | aeno | 43     |
+| westus3            | usw3 | 44     |
+
+<a name="h1-tagging"></a> [Naming](#h1-naming) | [Tagging](#h1-tagging)
+# Azure Tagging Convention
+
+1. Detail of **operation team** who responsible for this resource
+
+| Name                 | Description                                                  | Type   | Possible Values                      |
+|----------------------|--------------------------------------------------------------|--------|--------------------------------------|
+| Operation.Department | Short name of the department which operation team belongs to | String | Can be N/A if there is no Department |
+| Operation.Section    | Short name of the section which operation team belongs to    | String | Can be N/A if there is no Section    |
+| Operation.Unit       | Short name of the unit which operation team belongs to       | String | Can be N/A if there is no Unit       |
+| Operation.Name       | Name of operation owner                                      | String | (Mandatory)                          |
+
+2. Detail of **developer team** who responsible for this resource
+
+| Name                 | Description                                                  | Type   | Possible Values                               |
+|----------------------|--------------------------------------------------------------|--------|-----------------------------------------------|
+| Developer.Department | Short name of the department which developer team belongs to | String | Can be N/A if there is no Department (Vendor) |
+| Developer.Section    | Short name of the section which developer team belongs to    | String | Can be N/A if there is no Section             |
+| Developer.Unit       | Short name of the unit which developer team belongs to       | String | Can be N/A if there is no Unit                |
+| Developer.Name       | Name of developer owner                                      | String | (Mandatory)                                   |
+
+3. Detail of **business team** who responsible for this resource
+
+| Name                     | Description                                               | Type   | Possible Values                      |
+|--------------------------|-----------------------------------------------------------|--------|--------------------------------------|
+| BusinessOwner.Department | Shot name of the department which business team belong to | String | Can be N/A if there is no Department |
+| BusinessOwner.Section    | Shot name of the section which business  team belong to   | String | Can be N/A if there is no Section    |
+| BusinessOwner.Unit       | Shot name of the unit which business  team belong to      | String | Can be N/A if there is no Unit       |
+| BusinessOwner.Name       | Name of business owner                                    | String | (Mandatory)                          |
+
+4. System details
+
+| Name                | Description                                                                                    | Type    | Possible Values                                      |
+|---------------------|------------------------------------------------------------------------------------------------|---------|------------------------------------------------------|
+| Environment         | Deployment environment of the application, workload, or service                                | Enum    | dev / sit / stg / prd / sbx (mandatory)              |
+| ClusterNumber       | Order of number which the system will be deploy                                                | Integer | e.g. 1, 2, 3, … (mandatory)                          |
+| CostCenter          | Budget code (can request from administration officers of each department) (Cloud consumption)  | String  | e.g. 00123, … (mandatory)                            |
+| Region              | Regions of cloud provider which the resource deployed in                                       | String  | e.g. southeastasia, eastasia, …                      |
+| SystemName          | Name of the workload the resource supports.                                                    | string  | e.g. SuperDuper, Donut, MyChannel, etc               |
+| DataClassification  | Sensitivity of data hosted by this resource.                                                   | Enum    | Highly Confidential / Restricted / Internal / Public |
+| BusinessCriticality | Business impact of the resource or supported workload.                                         | Enum    | High / Medium / Low                                  |
+| CommercialName      | Commercial name of the project                                                                 | String  |                                                      |
